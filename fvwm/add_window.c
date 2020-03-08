@@ -2594,9 +2594,15 @@ FvwmWindow *AddWindow(
 		fw->g.frame.y = wattr.y;
 		fw->g.frame.width = wattr.width + b.total_size.width;
 		fw->g.frame.height = wattr.height + b.total_size.height;
+		fprintf(stderr, "1. Added window: {x: %d, y: %d, w: %d, h: %d}\n",
+			fw->g.frame.x, fw->g.frame.y, fw->g.frame.width,
+			fw->g.frame.height);
 		gravity_constrain_size(
 			fw->hints.win_gravity, fw, &fw->g.frame, 0);
 		update_absolute_geometry(fw);
+		fprintf(stderr, "2. Added window: {x: %d, y: %d, w: %d, h: %d}\n",
+			fw->g.frame.x, fw->g.frame.y, fw->g.frame.width,
+			fw->g.frame.height);
 	}
 
 	/****** auxiliary window setup ******/
@@ -2702,7 +2708,7 @@ FvwmWindow *AddWindow(
 		stick_page = is_window_sticky_across_pages(fw);
 		stick_desk = is_window_sticky_across_desks(fw);
 		if ((stick_page &&
-		     !IsRectangleOnThisPage(&fw->g.frame,
+		     !IsRectangleOnThisPage(mon, &fw->g.frame,
 		     mon->virtual_scr.CurrentDesk)) ||
 		    (stick_desk && fw->Desk != mon->virtual_scr.CurrentDesk))
 		{

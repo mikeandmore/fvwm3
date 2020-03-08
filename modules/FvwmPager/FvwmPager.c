@@ -892,6 +892,7 @@ void list_new_page(unsigned long *body)
 	struct fpmonitor *m;
 
 	m = fpmonitor_by_output(mon_num);
+	fprintf(stderr, "%s: using monitor: %s\n", __func__, m->name);
 
 	if (monitor_to_track != NULL && strcmp(m->name, monitor_to_track) != 0)
 		return;

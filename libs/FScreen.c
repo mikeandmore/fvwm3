@@ -197,7 +197,7 @@ monitor_init_one(struct monitor *m, int w, int h)
 	}
 
 	if (m->Desktops == NULL) {
-		if (m2->Desktops != NULL) {
+		if (m2 != NULL && m2->Desktops != NULL) {
 			memcpy(&m->virtual_scr, &m2->virtual_scr,
 				sizeof(m->virtual_scr));
 			m->Desktops = m2->Desktops;
@@ -219,13 +219,13 @@ monitor_init_one(struct monitor *m, int w, int h)
 		m->virtual_scr.MyDisplayWidth = w;
 		m->virtual_scr.MyDisplayHeight = h;
 	} else if (monitor_mode == MONITOR_TRACKING_M) {
-		m->virtual_scr.MyDisplayWidth = m->coord.x + m->coord.w;
-		m->virtual_scr.MyDisplayHeight = m->coord.y + m->coord.h;
+		m->virtual_scr.MyDisplayWidth = m->coord.w;
+		m->virtual_scr.MyDisplayHeight = m->coord.h;
 	}
 	m->Desktops->ewmh_dyn_working_area.x =
-		m->Desktops->ewmh_working_area.x = 0; //m->coord.x;
+		m->Desktops->ewmh_working_area.x = m->coord.x;
 	m->Desktops->ewmh_dyn_working_area.y =
-		m->Desktops->ewmh_working_area.y = 0; //m->coord.y;
+		m->Desktops->ewmh_working_area.y = m->coord.y;
 	m->Desktops->ewmh_dyn_working_area.width =
 		m->Desktops->ewmh_working_area.width =
 		m->virtual_scr.MyDisplayWidth;
